@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e35581ae36e140aa61d32776d2326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rawImage: {fileID: 517150223}
+  rigidbody2D: {fileID: 0}
 --- !u!50 &825018199
 Rigidbody2D:
   serializedVersion: 4
@@ -643,7 +643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &870641227
 MonoBehaviour:
   m_ObjectHideFlags: 0

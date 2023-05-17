@@ -6,38 +6,43 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] RawImage rawImage;
+    [SerializeField] Rigidbody2D rigidbody2D;
+    bool jumped = false;
+    bool isGround = false;
 
     private void Start()
     {
-        StartCoroutine(GetTexture());
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    IEnumerator GetTexture()
+    private void Update()
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_960_720.jpg");
-
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rawImage.texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-        }
-        else
-        {
-            Debug.Log(www.error);
+            jumped = true;
         }
     }
 
+    private void FixedUpdate()
+    {
+        Jump();
+    }
+
+    void Jump()
+    {
+        if(jumped && isGround)
+        {
+            rigidbody2D.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+            jumped = false;
+            isGround = false;
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("2D Ãæµ¹");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (collision.gameObject.name == "Platform(Clone)")
+        {
+            isGround = true;
+        }
     }
 }
