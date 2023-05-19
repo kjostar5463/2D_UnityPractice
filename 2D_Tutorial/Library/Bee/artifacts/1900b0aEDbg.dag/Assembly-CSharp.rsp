@@ -367,9 +367,12 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
+"Assets/Script/GamaManager.cs"
+"Assets/Script/Parallax.cs"
 "Assets/Script/Platform.cs"
 "Assets/Script/PlatformManager.cs"
 "Assets/Script/Player.cs"
+"Assets/Script/SoundManager.cs"
 -langversion:9.0
 
 /deterministic

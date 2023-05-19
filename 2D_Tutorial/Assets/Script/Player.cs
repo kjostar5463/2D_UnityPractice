@@ -6,21 +6,28 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rigidbody2D;
+    public SoundManager soundManager;
+
+    private Rigidbody2D rigidbody2D;
+    private Animator animator;
+    
     bool jumped = false;
     bool isGround = false;
+    bool isFall = false;
 
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             jumped = true;
         }
+        Fall();
     }
 
     private void FixedUpdate()
@@ -30,11 +37,22 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if(jumped && isGround)
+        if(jumped)
         {
+            animator.Play("Jump");
             rigidbody2D.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+            soundManager.Sound(SoundManager.SOUND_TYPE.JUMP);
             jumped = false;
             isGround = false;
+        }
+    }
+
+    void Fall()
+    {
+        if(isFall)
+        {
+            soundManager.Sound(SoundManager.SOUND_TYPE.GAME_OVER);
+            Time.timeScale = 0f;
         }
     }
 
@@ -43,6 +61,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name == "Platform(Clone)")
         {
             isGround = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Falling Zone")
+        {
+            isFall = true;
         }
     }
 }
