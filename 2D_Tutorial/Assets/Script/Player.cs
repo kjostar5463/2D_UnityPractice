@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class Player : MonoBehaviour
 {
     public SoundManager soundManager;
 
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
     private Animator animator;
     
     bool jumped = false;
     bool isGround = false;
     bool isFall = false;
 
+    public float MoveSpeed;
+
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -27,7 +32,10 @@ public class Player : MonoBehaviour
         {
             jumped = true;
         }
+        
+        Move();
         Fall();
+        
     }
 
     private void FixedUpdate()
@@ -52,8 +60,31 @@ public class Player : MonoBehaviour
         if(isFall)
         {
             soundManager.Sound(SoundManager.SOUND_TYPE.GAME_OVER);
+            
             Time.timeScale = 0f;
         }
+    }
+
+    public void Move()
+    {
+        float playerMove = Input.GetAxis("LeftRight") * Time.deltaTime * MoveSpeed;
+
+        if(Input.GetAxis("LeftRight") != 0) 
+        {
+            if(isGround)
+                animator.Play("run-Animation");
+            if (Input.GetAxis("LeftRight") < 0)
+            {
+                gameObject.transform.localScale = new Vector3(-2f, 2f, 2f);
+            }
+            else
+            {
+                gameObject.transform.localScale = new Vector3(2f, 2f, 2f);
+            }
+        }
+        
+       
+        gameObject.transform.Translate(new Vector2(playerMove, 0));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,6 +97,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        IItem item = collision.gameObject.GetComponent<IItem>();
+
+        if(item != null)
+        {
+            item.Use();
+        }
+
+
+        // Ãß¶ô
         if(collision.gameObject.name == "Falling Zone")
         {
             isFall = true;
