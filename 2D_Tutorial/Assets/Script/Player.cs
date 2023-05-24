@@ -9,21 +9,24 @@ using Input = UnityEngine.Input;
 public class Player : MonoBehaviour
 {
     public SoundManager soundManager;
+    [SerializeField] AudioSource audioSource;
 
     private new Rigidbody2D rigidbody2D;
     private Animator animator;
     
     bool jumped = false;
     bool isGround = false;
-    bool isFall = false;
 
+    bool isFall = false;
+    int deathCnt = 0;
+
+    float moveMent;
     public float MoveSpeed;
 
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        Time.timeScale = 1;
     }
 
     private void Update()
@@ -59,21 +62,36 @@ public class Player : MonoBehaviour
     {
         if(isFall)
         {
-            soundManager.Sound(SoundManager.SOUND_TYPE.GAME_OVER);
-            
-            Time.timeScale = 0f;
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            moveMent = 0;
+            animator.Play("Death");
+            if(deathCnt == 1)
+                StartCoroutine(waitForEnd());
+            deathCnt++;
         }
+    }
+
+    IEnumerator waitForEnd()
+    {
+        soundManager.Sound(SoundManager.SOUND_TYPE.GAME_OVER);
+        yield return new WaitForSeconds(0.1f);
+        rigidbody2D.velocity = Vector3.zero;
+        rigidbody2D.AddForce(new Vector2(0, 5) , ForceMode2D.Impulse);
+        yield return new WaitForSeconds(2f);
+        audioSource.Stop();
+        Time.timeScale = 0f;
     }
 
     public void Move()
     {
-        float playerMove = Input.GetAxis("LeftRight") * Time.deltaTime * MoveSpeed;
-
-        if(Input.GetAxis("LeftRight") != 0) 
+        moveMent = Input.GetAxis("LeftRight");
+        float playerMove = moveMent * Time.deltaTime * MoveSpeed;
+        
+        if(moveMent != 0) 
         {
             if(isGround)
                 animator.Play("run-Animation");
-            if (Input.GetAxis("LeftRight") < 0)
+            if (moveMent < 0)
             {
                 gameObject.transform.localScale = new Vector3(-2f, 2f, 2f);
             }
@@ -104,11 +122,11 @@ public class Player : MonoBehaviour
             item.Use();
         }
 
-
         // Ãß¶ô
-        if(collision.gameObject.name == "Falling Zone")
+        if(collision.gameObject.tag == "Death Zone")
         {
             isFall = true;
+            deathCnt++;
         }
     }
 }

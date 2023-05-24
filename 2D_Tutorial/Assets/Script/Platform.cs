@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public float speed = 1.4f;
+    private float speed = 1.3f;
 
     [SerializeField] GameObject[] cherry;
     [SerializeField] GameObject[] gem;

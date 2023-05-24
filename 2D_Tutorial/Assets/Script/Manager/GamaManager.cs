@@ -15,12 +15,7 @@ public class GamaManager : MonoBehaviour
     {
         set {
             cScore = value;
-            bScore = cScore;
-
-            bestScoreText.text = "Best Score : " + bScore;
             currentScoreText.text = "Current Score : " + cScore;
-
-            PlayerPrefs.SetInt("BestScore", bScore);
         }
         get { return cScore; }
     }
@@ -31,7 +26,7 @@ public class GamaManager : MonoBehaviour
         if (instance == null) instance = this;
 
         Load();
-        Save();
+        bestScoreText.text = "Best Score : " + bScore;
     }
 
     public void Save()
@@ -48,6 +43,10 @@ public class GamaManager : MonoBehaviour
         bScore = PlayerPrefs.GetInt("BestScore");
     }
 
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
 
     // Start is called before the first frame update
     void Start()
