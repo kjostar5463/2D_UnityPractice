@@ -8,7 +8,7 @@ public class Parallax : MonoBehaviour
     [SerializeField] Rect rect;
     [SerializeField] RawImage rawImage;
 
-    [SerializeField] float speed = 0.25f;
+    [SerializeField] float speed = 1.0f;
 
     // Update is called once per frame
     void Update()
