@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Death Zone
+  - platform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - MenuUI
   - Water
   - UI
   - 
@@ -41,4 +42,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: OpenUI
+    uniqueID: 532177277
+    locked: 0
+  - name: Loading
+    uniqueID: 2539474299
     locked: 0

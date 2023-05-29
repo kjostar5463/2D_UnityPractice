@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Cherry : MonoBehaviour, IItem
 {
-    int score;
-
+    Player player;
     public void Use()
     {
+        player = GameObject.Find("player").GetComponent<Player>();
         gameObject.SetActive(false);
-        GamaManager.instance.Score++;
-        score = GamaManager.instance.Score;
-        Debug.Log(score);
+        player.PlayerHeal();
     }
 }

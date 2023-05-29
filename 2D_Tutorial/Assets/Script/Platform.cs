@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Platform : MonoBehaviour
 {
@@ -8,29 +10,104 @@ public class Platform : MonoBehaviour
 
     [SerializeField] GameObject[] cherry;
     [SerializeField] GameObject[] gem;
+    [SerializeField] GameObject[] tile;
+    private GameObject[] thron;
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < cherry.Length; i++)
+        thron = new GameObject[tile.Length];
+
+        bool thronAppear = false;
+
+        for (int i = 0; i < tile.Length; i++)
         {
-            int rand = Random.Range(0, 3);
-            switch (rand)
+            if(tile[i].transform.GetChild(0).gameObject.name != "spikes")
             {
-                case 0:
-                    cherry[i].SetActive(false);
-                    gem[i].SetActive(false);
-                    break;
-                case 1:
-                    cherry[i].SetActive(true);
-                    gem[i].SetActive(false); 
-                    break;
-                case 2:
-                    cherry[i].SetActive(false);
-                    gem[i].SetActive(true); 
-                    break;
-                default: break;
+                thron[i] = null;
             }
+                
+            thron[i] = tile[i].transform.GetChild(0).gameObject;
+        }
+
+        for (int i = 0; i < tile.Length; i++)
+        {
+            float rand = Random.Range(0.0f, 1.0f);
+            float randPos = Random.Range(0.0f, 0.35f);
+            if (thron[i] != null)
+            {
+                if (!thronAppear && rand < 0.2f)
+                {
+                    thron[i].SetActive(true);
+                    thronAppear = true;
+                }
+                else
+                {
+                    thron[i].SetActive(false);
+                }
+            }
+            rand = Random.Range(0.0f, 1.0f);
+            if (rand < 0.2f)
+            {
+                if (thron[i] != null && thron[i].activeSelf)
+                {
+                    if(randPos < 0.25f)
+                    {
+                        cherry[i].transform.localPosition = new Vector2(
+                            cherry[i].transform.localPosition.x,
+                            0.25f);
+                    }
+                }
+                else
+                {
+                    cherry[i].transform.localPosition = new Vector2(
+                        cherry[i].transform.localPosition.x,
+                        0.15f + randPos);
+                }
+                cherry[i].SetActive(true);
+                gem[i].SetActive(false);
+            }
+            
+            else if (rand >= 0.2f && rand < 0.6f)
+            {
+                if (thron[i] != null && thron[i].activeSelf)
+                {
+                    if (randPos < 0.25)
+                    {
+                        gem[i].transform.localPosition = new Vector2(
+                            gem[i].transform.localPosition.x,
+                            0.25f);
+                    }
+                }
+                else
+                {
+                    gem[i].transform.localPosition = new Vector2(
+                        gem[i].transform.localPosition.x,
+                        0.15f + randPos);
+                }
+
+                gem[i].SetActive(true);
+                cherry[i].SetActive(false);
+            }
+            else
+            {
+                cherry[i].SetActive(false);
+                gem[i].SetActive(false);
+            }
+        }
+        float randGem = Random.Range(0.0f, 1.0f);
+        float gemPos = Random.Range(0.0f, 0.35f);
+        GameObject airGem = transform.Find("gem Zone").gameObject;
+        if (randGem < 0.5f)
+        {
+            airGem.SetActive(true);
+            airGem.transform.localPosition = new Vector2(
+                airGem.transform.localPosition.x, 
+                0.15f + gemPos);
+        }
+        else
+        {
+            airGem.SetActive(false);
         }
     }
 
@@ -39,11 +116,16 @@ public class Platform : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        transform.parent.Translate(Vector2.left * speed * Time.deltaTime);
+    }
+
+    private void OnDisable()
+    {
+        transform.parent.position = new Vector2(10.0f, -1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        ObjectPoolManager.Instance.InsertQueue(transform.parent.gameObject);
     }
 }

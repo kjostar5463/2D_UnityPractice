@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    public GameObject platform;
-    
-
     void Start()
     {
         // go [   ] <- platform
@@ -17,25 +14,14 @@ public class PlatformManager : MonoBehaviour
         StartCoroutine(SpawnCoroutine());
     }
 
-    
-
     IEnumerator SpawnCoroutine()
     {
-        GameObject newPlatform;
-
         while (true)
         {
-            newPlatform = Instantiate(platform);
-            newPlatform.transform.position = new Vector2(-1.25f, -0.5f);
+            ObjectPoolManager.Instance.GetQueue();
 
-            yield return new WaitForSeconds(3.5f);
-
+            yield return new WaitForSeconds(4.0f);
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

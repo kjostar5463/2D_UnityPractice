@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
     public enum SOUND_TYPE
     { 
@@ -14,14 +14,9 @@ public class SoundManager : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] AudioClip[] audioClip;
 
-    public static SoundManager instance;
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
     }
 
     // Start is called before the first frame update
