@@ -422,6 +422,14 @@
 "Assets/2D RUNGAME/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/2D RUNGAME/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/2D RUNGAME/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/DUN_AnimatedCharacterSelection.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/DUN_StaggerAnimation.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/Prop Variants/DUN_Banner.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/Prop Variants/DUN_Chair.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/Prop Variants/DUN_LootSack.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/Prop Variants/DUN_Statue.cs"
+"Assets/KrishnaPalacio/MINIFANTASY - Dungeon/Scripts/Prop Variants/DUN_Table.cs"
+"Assets/Travis Game Assets/Status Effects/Demo Scene/Scripts/StatusEffectsPreview.cs"
 -langversion:9.0
 
 /deterministic
