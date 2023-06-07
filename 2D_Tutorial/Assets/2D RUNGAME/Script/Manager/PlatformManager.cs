@@ -16,11 +16,12 @@ public class PlatformManager : MonoBehaviour
 
     IEnumerator SpawnCoroutine()
     {
+        WaitForSeconds fourWS = new WaitForSeconds(4.0f);
         while (true)
         {
             ObjectPoolManager.Instance.GetQueue();
 
-            yield return new WaitForSeconds(4.0f);
+            yield return fourWS;
         }
     }
 

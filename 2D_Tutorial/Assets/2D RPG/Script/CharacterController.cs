@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour
 {
 
     private Vector2 moveMent;
-    [SerializeField] float speed = 5.0f;
+    [SerializeField] float speed = 10.0f;
 
     private SpriteRenderer spriteRenderer;
 
@@ -21,8 +23,10 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] ParticleSystem particleVariable;
 
+
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         spriteRenderer = GetComponent<SpriteRenderer>();
         origin_Material = spriteRenderer.material;
     }
@@ -33,9 +37,14 @@ public class CharacterController : MonoBehaviour
         moveMent.x = Input.GetAxis("LeftRight");
         moveMent.y = Input.GetAxis("UpDown");
 
-        transform.Translate(moveMent * speed *  Time.deltaTime);
         
-        if(moveMent.x > 0)
+    }
+
+    private void FixedUpdate()
+    {
+        transform.Translate(moveMent * speed * Time.deltaTime);
+
+        if (moveMent.x > 0)
         {
             spriteRenderer.flipX = true;
         }
@@ -43,10 +52,6 @@ public class CharacterController : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
-    }
-
-    private void FixedUpdate()
-    {
     }
 
     void Damage()
@@ -61,12 +66,20 @@ public class CharacterController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Damage();
-        StartCoroutine(Flash());
-        if(HP <= 0)
+        if (collision.CompareTag("Monster"))
         {
-            Death();
+            Damage();
+            StartCoroutine(Flash());
+            if (HP <= 0)
+            {
+                Death();
+            }
         }
+        if (collision.CompareTag("Portal"))
+        {
+            SceneManager.LoadScene("RPG Stage");
+        }
+        
     }
 
     public IEnumerator Flash()

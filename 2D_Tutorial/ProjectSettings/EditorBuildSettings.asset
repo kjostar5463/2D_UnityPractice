@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/2D RUNGAME/Scenes/Title Scene.unity
-    guid: fc570f8f2a6716e4e99a3c06039f37ea
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+    path: Assets/2D RPG/Scenes/RPG Title.unity
+    guid: 6b8f9d3e1c33117478d561baad0f2e7d
   - enabled: 1
-    path: Assets/2D RUNGAME/Scenes/Game Scene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/2D RPG/Scenes/RPG Game.unity
+    guid: 985ba884de8fa874fa1a3a7d17b9920b
+  - enabled: 1
+    path: Assets/2D RPG/Scenes/RPG Stage.unity
+    guid: 7e90373ffe3d0554c9fcc7545f17a300
   m_configObjects: {}

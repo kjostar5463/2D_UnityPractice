@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Death Zone
   - platform
+  - Monster
+  - Portal
   layers:
   - Default
   - TransparentFX
