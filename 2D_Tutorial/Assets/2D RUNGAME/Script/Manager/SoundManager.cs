@@ -14,7 +14,6 @@ public class SoundManager : Singleton<SoundManager>
     private AudioSource audioSource;
     [SerializeField] AudioClip[] audioClip;
 
-
     private void Awake()
     {
     }
@@ -30,7 +29,5 @@ public class SoundManager : Singleton<SoundManager>
     {
         audioSource.PlayOneShot(audioClip[(int)soundType]);
     }
-
-
 
 }

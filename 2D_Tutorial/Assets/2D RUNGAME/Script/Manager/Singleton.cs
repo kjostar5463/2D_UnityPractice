@@ -14,7 +14,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             if(instance == null)
             {
                 GameObject manager = GameObject.Find(typeof(T).Name);
-
+                
                 if(manager == null)
                 {
                     manager = new GameObject(typeof(T).Name);
